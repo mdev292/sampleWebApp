@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using sampleWebApp.Models;
 
 namespace sampleWebApp.Controllers
@@ -7,10 +8,12 @@ namespace sampleWebApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly BookStoresDBContext _dbContext;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, BookStoresDBContext dbContext)
         {
             _logger = logger;
+            _dbContext = dbContext;
         }
 
         public IActionResult Index()
@@ -20,6 +23,7 @@ namespace sampleWebApp.Controllers
 
         public IActionResult Privacy()
         {
+            Privacy2();
             return View();
         }
 
@@ -29,9 +33,15 @@ namespace sampleWebApp.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult Privacy2()
+        public void Privacy2()
+        {
+            var nameOfBook = _dbContext.Books.FirstOrDefault();
+        }
+
+        public IActionResult Login()
         {
             return View();
         }
+
     }
 }
