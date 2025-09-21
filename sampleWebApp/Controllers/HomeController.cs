@@ -16,6 +16,7 @@ namespace sampleWebApp.Controllers
             _dbContext = dbContext;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
